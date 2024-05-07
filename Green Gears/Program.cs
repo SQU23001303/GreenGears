@@ -11,11 +11,12 @@ namespace Green_Gears
         static void Main(string[] args)
         {
             ToolManager toolManager = new ToolManager();
-            toolManager.AddTool(new Tools (1, "Ladder", true));
-            toolManager.AddTool(new Tools (2, "Lawnmower", true));
-            toolManager.AddTool(new Tools (3, "Strimmer", true));
-            toolManager.AddTool(new Tools (4, "Wheel Barrow", true));
-            toolManager.AddTool(new Tools (5, "Watering Can", true));
+            toolManager.AddTool(new Tools(1, "Ladder", true, 15.00));
+            toolManager.AddTool(new Tools(2, "Lawnmower", true, 20.00));
+            toolManager.AddTool(new Tools(3, "Strimmer", true, 25.00));
+            toolManager.AddTool(new Tools(4, "Wheel Barrow", true, 10.00));
+            toolManager.AddTool(new Tools(5, "Watering Can", true, 5.00));
+            toolManager.DisplayTools();
 
             Console.WriteLine("Welcome to Green Gears");
             Console.WriteLine("The place where we loan you gardening equipment");
@@ -41,7 +42,7 @@ namespace Green_Gears
                 if (!int.TryParse(input, out int userInput))
                 {
                     Console.WriteLine("Invalid input. Please enter a valid integer.");
-                    continue; // Continue to the next iteration of the loop
+                    continue;
                 }
 
                 switch (userInput)
@@ -70,22 +71,25 @@ namespace Green_Gears
 
             while (true)
             {
-                Console.WriteLine("Loan equipments");
-
                 ToolManager toolManager = new ToolManager();
-                toolManager.AddTool(new Tools(1, "Ladder", true));
-                toolManager.AddTool(new Tools(2, "Lawnmower", true));
-                toolManager.AddTool(new Tools(3, "Strimmer", true));
-                toolManager.AddTool(new Tools(4, "Wheel Barrow", false));
-                toolManager.AddTool(new Tools(5, "Watering Can", true));
 
-                //ToolManager toolManager = new ToolManager();
                 toolManager.DisplayTools();
 
-                Console.WriteLine("What tool would you like to borrow?");
+                Console.WriteLine("What Tool number would you like to borrow?");
+                string userChoice = Console.ReadLine();
 
+                int toolId;
+                if (int.TryParse(userChoice, out toolId))
+                {
+                    Console.WriteLine("You have chose tool number " + userChoice);
+                    toolManager.UpdateTools(toolId, false);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid integer for the tool ID.");
+                }
 
-
+                selections(args);
                 Console.ReadKey();
             }
         }

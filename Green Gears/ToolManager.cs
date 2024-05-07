@@ -9,6 +9,7 @@ namespace Green_Gears
     internal class ToolManager
     {
         private List<Tools> tools;
+        private int toolId;
 
         public ToolManager()
         {
@@ -20,36 +21,30 @@ namespace Green_Gears
             tools.Add(tool);
         }
 
-        public void UpdateTools(int toolId, bool Available)
-        {
+        public bool UpdateTools(int toolId, bool available)
+        { 
             Tools toolToUpdate = tools.Find(t => t.Id == toolId);
             if (toolToUpdate != null)
             {
-                toolToUpdate.Available = true;
-                Console.WriteLine($"Tool {toolId} availability updated to {(Available ? "Available" : "Not Available")}.");
+                toolToUpdate.Available = false;
+                Console.WriteLine($"Tool {toolId} availability updated to {(available ? "Available" : "Not Available")}.");
+                return available;
+                //need to return the outcome into tool class data so i can pull the information into display tools
             }
             else
             {
                 Console.WriteLine($"Tool {toolId} not found.");
+                return false;
             }
         }
 
         public void DisplayTools()
         {
-            ToolManager.UpdateTools();
-            
             Console.WriteLine("Available Tools for hire:");
             foreach (var tool in tools)
             {
-                if (tool.Available == true)
-                {
-
-                    Console.WriteLine($"{tool.Id}: {tool.Name} - Available");
-                }
-                else
-                {
-
-                }
+                Console.WriteLine($"{tool.Id}: {tool.Name} - {(tool.Available ? "Available" : "Not Available")}.");
+                //Pull this code from Tools as it is and make sure update method outputs it properly
             }
         }
 
@@ -74,6 +69,7 @@ namespace Green_Gears
             {
                 tool.Available = true;
                 Console.WriteLine($"Tool '{tool.Name}' has been returned.");
+                //Return the availbility as true
             }
             else
             {
