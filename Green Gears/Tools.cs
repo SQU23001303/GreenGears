@@ -11,12 +11,14 @@ namespace Green_Gears
         public int Id { get; set; }
         public string Name { get; set; }
         public bool Available { get; set; }
+        public double Price { get; set; }
 
-        public Tools (int id, string name, bool available)
+        public Tools (int id, string name, bool available, double price)
         {
             Id = id;
             Name = name;
-            Available = true;
+            Available = available;
+            Price = price;
         }
     }
 }
