@@ -10,17 +10,22 @@ namespace Green_Gears
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Welcome to Green Gears");
+            Console.WriteLine("The place where we loan you gardening equipment");
+            InitializeToolManager();
+            selections(args);
+        }
+
+        static ToolManager InitializeToolManager()
+        {
             ToolManager toolManager = new ToolManager();
             toolManager.AddTool(new Tools(1, "Ladder", true, 15.00));
             toolManager.AddTool(new Tools(2, "Lawnmower", true, 20.00));
             toolManager.AddTool(new Tools(3, "Strimmer", true, 25.00));
             toolManager.AddTool(new Tools(4, "Wheel Barrow", true, 10.00));
             toolManager.AddTool(new Tools(5, "Watering Can", true, 5.00));
-            toolManager.DisplayTools();
 
-            Console.WriteLine("Welcome to Green Gears");
-            Console.WriteLine("The place where we loan you gardening equipment");
-            selections(args);
+            return toolManager;
         }
 
         static void selections(string[] args)
@@ -60,6 +65,9 @@ namespace Green_Gears
                     case 4:
                         Console.WriteLine("You have picked option 4");
                         break;
+                    case 5:
+                        Environment.Exit(0);
+                        break;
                 }
 
             }
@@ -73,9 +81,8 @@ namespace Green_Gears
             {
                 ToolManager toolManager = new ToolManager();
 
-                toolManager.DisplayTools();
-
                 Console.WriteLine("What Tool number would you like to borrow?");
+                toolManager.DisplayTools();
                 string userChoice = Console.ReadLine();
 
                 int toolId;
@@ -89,7 +96,27 @@ namespace Green_Gears
                     Console.WriteLine("Invalid input. Please enter a valid integer for the tool ID.");
                 }
 
-                selections(args);
+                Console.WriteLine("Do you want to borrow another tool? (yes/no)");
+                string answer = Console.ReadLine().ToLower();
+                if (answer != "yes")
+                {
+                    loanEquipment(args);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Are you done with the app? (yes/no");
+                    string answer1 = Console.ReadLine().ToLower();
+                    if (answer1 != "no")
+                    {
+                        Environment.Exit(0);
+                    }
+                    else
+                    {
+                        selections(args);
+                        break;
+                    }
+                }
                 Console.ReadKey();
             }
         }
