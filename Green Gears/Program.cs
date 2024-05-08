@@ -11,31 +11,14 @@ namespace Green_Gears
         static void Main(string[] args)
         {
             ToolManager toolManager = new ToolManager();
-            toolManager.AddTool(new Tools(1, "Ladder", true, 15.00));
-            toolManager.AddTool(new Tools(2, "Lawnmower", true, 20.00));
-            toolManager.AddTool(new Tools(3, "Strimmer", true, 25.00));
-            toolManager.AddTool(new Tools(4, "Wheel Barrow", true, 10.00));
-            toolManager.AddTool(new Tools(5, "Watering Can", true, 5.00));
-            toolManager.DisplayTools();
+            InteractWithItems interactWithItems = new InteractWithItems();
 
             Console.WriteLine("Welcome to Green Gears");
             Console.WriteLine("The place where we loan you gardening equipment");
-            selections(args);
-        }
-
-        static void selections(string[] args)
-        {
-
-            bool running = true;
 
             while (true)
             {
-                Console.WriteLine("Please select what you would like to do on our system today?");
-                Console.WriteLine("1 - Loan a piece of equipment");
-                Console.WriteLine("2 - Return a piece of equipment");
-                Console.WriteLine("3 - Update a customer record");
-                Console.WriteLine("4 - Current Loan records");
-                Console.WriteLine("5 - Exit");
+                DisplayOptions();
 
                 string input = Console.ReadLine();
 
@@ -49,50 +32,53 @@ namespace Green_Gears
                 {
                     case 1:
                         Console.WriteLine("You have picked option 1");
-                        loanEquipment(args);
+                        toolManager.DisplayAvailableTools();
+                        int toolId = GetToolIdFromUser();
+                        interactWithItems.LoanTool(toolManager, toolId);
                         break;
                     case 2:
                         Console.WriteLine("You have picked option 2");
+                        interactWithItems.ReturnTool(toolManager);
                         break;
                     case 3:
                         Console.WriteLine("You have picked option 3");
+                        // Update customer record
                         break;
                     case 4:
                         Console.WriteLine("You have picked option 4");
+                        // Display current loan records
+                        break;
+                    case 5:
+                        Console.WriteLine("Exiting program...");
+                        return;
+                    default:
+                        Console.WriteLine("Invalid option. Please select a valid option.");
                         break;
                 }
-
             }
         }
 
-        static void loanEquipment(string[] args)
+        static void DisplayOptions()
         {
-            bool running = true;
-
-            while (true)
-            {
-                ToolManager toolManager = new ToolManager();
-
-                toolManager.DisplayTools();
-
-                Console.WriteLine("What Tool number would you like to borrow?");
-                string userChoice = Console.ReadLine();
-
-                int toolId;
-                if (int.TryParse(userChoice, out toolId))
-                {
-                    Console.WriteLine("You have chose tool number " + userChoice);
-                    toolManager.UpdateTools(toolId, false);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid integer for the tool ID.");
-                }
-
-                selections(args);
-                Console.ReadKey();
-            }
+            Console.WriteLine("Please select what you would like to do on our system today?");
+            Console.WriteLine("1 - Borrow a tool");
+            Console.WriteLine("2 - Return a tool");
+            Console.WriteLine("3 - Update customer record");
+            Console.WriteLine("4 - Current loan records");
+            Console.WriteLine("5 - Exit");
         }
 
+        static int GetToolIdFromUser()
+        {
+            Console.WriteLine("Enter the tool ID you want to borrow:");
+            string input = Console.ReadLine();
+            int toolId;
+            while (!int.TryParse(input, out toolId))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid tool ID.");
+                input = Console.ReadLine();
+            }
+            return toolId;
+        }
     }
 }
