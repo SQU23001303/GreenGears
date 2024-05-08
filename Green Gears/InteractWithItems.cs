@@ -28,6 +28,15 @@ namespace Green_Gears
 
         public void ReturnTool(ToolManager toolManager)
         {
+            Console.WriteLine("Tools currently in use:");
+            foreach (var tool in toolManager.tools)
+            {
+                if (!tool.Available)
+                {
+                    Console.WriteLine($"{tool.Id}: {tool.Name}");
+                }
+            }
+
             Console.WriteLine("Enter the tool ID to return:");
             string input = Console.ReadLine();
             if (!int.TryParse(input, out int toolId))

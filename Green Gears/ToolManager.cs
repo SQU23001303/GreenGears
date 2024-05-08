@@ -8,7 +8,7 @@ namespace Green_Gears
 {
     class ToolManager
     {
-        private List<Tools> tools;
+        public List<Tools> tools;
 
         public ToolManager()
         {
@@ -28,6 +28,18 @@ namespace Green_Gears
             foreach (var tool in tools)
             {
                 Console.WriteLine($"{tool.Id}: {tool.Name} - {(tool.Available ? "Available" : "Not Available")}");
+            }
+        }
+
+        public void DisplayUnavailableTools()
+        {
+            Console.WriteLine("Unavailable Tools for hire:");
+            foreach (var tool in tools)
+            {
+                if (!tool.Available)
+                {
+                    Console.WriteLine($"{tool.Id}: {tool.Name}");
+                }
             }
         }
 
