@@ -6,74 +6,47 @@ using System.Threading.Tasks;
 
 namespace Green_Gears
 {
-    internal class ToolManager
+    class ToolManager
     {
         private List<Tools> tools;
-        private int toolId;
 
         public ToolManager()
         {
-            tools = new List<Tools>();
-        }
-
-        public void AddTool(Tools tool)
+            tools = new List<Tools>
         {
-            tools.Add(tool);
+            new Tools(1, "Ladder", true, 15.00),
+            new Tools(2, "Lawnmower", true, 20.00),
+            new Tools(3, "Strimmer", true, 25.00),
+            new Tools(4, "Wheel Barrow", true, 10.00),
+            new Tools(5, "Watering Can", true, 5.00)
+        };
         }
 
-        public bool UpdateTools(int toolId, bool available)
-        { 
-            Tools toolToUpdate = tools.Find(t => t.Id == toolId);
-            if (toolToUpdate != null)
-            {
-                toolToUpdate.Available = false;
-                Console.WriteLine($"Tool {toolId} availability updated to {(available ? "Available" : "Not Available")}.");
-                return available;
-                //need to return the outcome into tool class data so i can pull the information into display tools
-            }
-            else
-            {
-                Console.WriteLine($"Tool {toolId} not found.");
-                return false;
-            }
-        }
-
-        public void DisplayTools()
+        public void DisplayAvailableTools()
         {
             Console.WriteLine("Available Tools for hire:");
             foreach (var tool in tools)
             {
-                Console.WriteLine($"{tool.Id}: {tool.Name} - {(tool.Available ? "Available" : "Not Available")}.");
-                //Pull this code from Tools as it is and make sure update method outputs it properly
+                Console.WriteLine($"{tool.Id}: {tool.Name} - {(tool.Available ? "Available" : "Not Available")}");
             }
         }
 
-        public void LoanTool(int toolId)
+        public Tools GetToolById(int toolId)
         {
-            Tools tool = tools.Find(t => t.Id == toolId);
-            if (tool != null && tool.Available)
-            {
-                tool.Available = false;
-                Console.WriteLine($"Tool '{tool.Name}' has been loaned out.");
-            }
-            else
-            {
-                Console.WriteLine("Invalid tool ID or tool is not available.");
-            }
+            return tools.Find(t => t.Id == toolId);
         }
 
-        public void ReturnTool(int toolId)
+        public void UpdateToolAvailability(int toolId, bool available)
         {
-            Tools tool = tools.Find(t => t.Id == toolId);
-            if (tool != null && !tool.Available)
+            Tools toolToUpdate = tools.Find(t => t.Id == toolId);
+            if (toolToUpdate != null)
             {
-                tool.Available = true;
-                Console.WriteLine($"Tool '{tool.Name}' has been returned.");
-                //Return the availbility as true
+                toolToUpdate.Available = available;
+                Console.WriteLine($"Tool {toolId} availability updated to {(available ? "Available" : "Not Available")}");
             }
             else
             {
-                Console.WriteLine("Invalid tool ID or tool is already available.");
+                Console.WriteLine($"Tool {toolId} not found.");
             }
         }
     }
