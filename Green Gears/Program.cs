@@ -46,7 +46,7 @@ namespace Green_Gears
                         break;
                     case 4:
                         Console.WriteLine("You have picked option 4");
-                        // Display current loan records
+                        interactWithItems.DisplayUnavailableTools(toolManager);
                         break;
                     case 5:
                         Console.WriteLine("Exiting program...");

@@ -8,7 +8,7 @@ namespace Green_Gears
 {
     class ToolManager
     {
-        private List<Tools> tools;
+        public List<Tools> tools;
 
         public ToolManager()
         {

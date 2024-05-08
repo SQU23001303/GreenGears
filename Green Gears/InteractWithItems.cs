@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Green_Gears
@@ -49,6 +50,34 @@ namespace Green_Gears
             {
                 Console.WriteLine($"Tool with ID '{toolId}' not found.");
             }
+        }
+
+        public void DisplayUnavailableTools(ToolManager toolManager)
+        {
+            int count = 0;
+
+            foreach (var tool in toolManager.tools)
+            {
+                if (!tool.Available)
+                {
+                    count++; 
+                }
+            }
+
+            if (count > 0)
+            {
+                Console.WriteLine("Unavailable Tools:");
+                foreach (var tool in toolManager.tools)
+                {
+                    Console.WriteLine($"{tool.Id}: {tool.Name}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("All tools are available.");
+            }
+
+
         }
     }
 }
