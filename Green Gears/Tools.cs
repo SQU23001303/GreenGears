@@ -12,6 +12,7 @@ namespace Green_Gears
         public string Name { get; set; }
         public bool Available { get; set; }
         public double Price { get; set; }
+        public DateTime LoanTimestamp { get; set; }
 
         public Tools(int id, string name, bool available, double price)
         {

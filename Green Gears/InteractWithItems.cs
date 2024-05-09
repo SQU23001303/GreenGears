@@ -14,8 +14,10 @@ namespace Green_Gears
             Tools toolToLoan = toolManager.GetToolById(toolId);
             if (toolToLoan != null && toolToLoan.Available)
             {
+                DateTime returnDate = DateTime.Now.AddDays(7); // Assuming a loan period of 7 days
+                toolToLoan.LoanTimestamp = DateTime.Now; // Record the loan timestamp
                 toolManager.UpdateToolAvailability(toolId, false);
-                Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out.");
+                Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out, with the following return date: {returnDate}");
             }
             else if (toolToLoan != null && !toolToLoan.Available)
             {
@@ -29,6 +31,7 @@ namespace Green_Gears
 
         public void ReturnTool(ToolManager toolManager)
         {
+            DisplayUnavailableTools(toolManager);
             Console.WriteLine("Enter the tool ID to return:");
             string input = Console.ReadLine();
             if (!int.TryParse(input, out int toolId))
@@ -66,18 +69,20 @@ namespace Green_Gears
 
             if (count > 0)
             {
-                Console.WriteLine("Unavailable Tools:");
+                Console.WriteLine("Tools to return:");
                 foreach (var tool in toolManager.tools)
                 {
-                    Console.WriteLine($"{tool.Id}: {tool.Name}");
+                   if (!tool.Available)
+                    {
+                        Console.WriteLine($"{tool.Id}: {tool.Name}");
+                    }
+                        
                 }
             }
             else
             {
                 Console.WriteLine("All tools are available.");
             }
-
-
         }
     }
 }

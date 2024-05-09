@@ -60,7 +60,7 @@ namespace Green_Gears
 
         static void DisplayOptions()
         {
-            Console.WriteLine("Please select what you would like to do on our system today?");
+            Console.WriteLine("\nPlease select what you would like to do on our system today?");
             Console.WriteLine("1 - Borrow a tool");
             Console.WriteLine("2 - Return a tool");
             Console.WriteLine("3 - Update customer record");
