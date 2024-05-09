@@ -9,7 +9,7 @@ namespace Green_Gears
 {
     class InteractWithItems
     {
-        public void LoanTool(ToolManager toolManager, int toolId)
+        public DateTime LoanTool(ToolManager toolManager, int toolId)
         {
             Tools toolToLoan = toolManager.GetToolById(toolId);
             if (toolToLoan != null && toolToLoan.Available)
@@ -18,6 +18,7 @@ namespace Green_Gears
                 toolToLoan.LoanTimestamp = DateTime.Now; // Record the loan timestamp
                 toolManager.UpdateToolAvailability(toolId, false);
                 Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out, with the following return date: {returnDate}");
+                return returnDate;
             }
             else if (toolToLoan != null && !toolToLoan.Available)
             {
@@ -27,6 +28,7 @@ namespace Green_Gears
             {
                 Console.WriteLine("Invalid tool ID.");
             }
+            return DateTime.Now; // Return a default value if the tool cannot be loaned
         }
 
         public void ReturnTool(ToolManager toolManager)
@@ -72,11 +74,12 @@ namespace Green_Gears
                 Console.WriteLine("Tools to return:");
                 foreach (var tool in toolManager.tools)
                 {
-                   if (!tool.Available)
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    if (!tool.Available)
                     {
-                        Console.WriteLine($"{tool.Id}: {tool.Name}");
+                        Console.WriteLine($"{tool.Id}: {tool.Name} {tool.LoanTimestamp.AddDays(7)}");
                     }
-                        
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             }
             else

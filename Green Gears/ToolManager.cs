@@ -24,11 +24,13 @@ namespace Green_Gears
 
         public void DisplayAvailableTools()
         {
-            Console.WriteLine("Available Tools for hire:");
+            Console.WriteLine("\nAvailable Tools for hire:");
             foreach (var tool in tools)
             {
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
                 Console.WriteLine($"{tool.Id}: {tool.Name} - {(tool.Available ? "Available" : "Not Available")}");
             }
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public Tools GetToolById(int toolId)
