@@ -87,5 +87,40 @@ namespace Green_Gears
                 Console.WriteLine("All tools are available.");
             }
         }
+
+        public void OverdueItems(ToolManager toolManager)
+        {
+            int count = 0;
+
+            foreach (var tool in toolManager.tools)
+            {
+                if (!tool.Available && DateTime.Now > tool.LoanTimestamp.AddDays(7))
+                {
+                    count++;
+                }
+            }
+
+            if (count > 0)
+            {
+                foreach (var tool in toolManager.tools)
+                {
+                    if (!tool.Available && DateTime.Now > tool.LoanTimestamp.AddDays(7))
+                    {
+                        // Calculate the number of days overdue
+                        int overdueDays = (int)(DateTime.Now - tool.LoanTimestamp.AddDays(7)).TotalDays;
+
+                        // Calculate the overdue amount
+                        double overdueAmount = overdueDays * 10.0;
+
+                        Console.WriteLine($"Tool '{tool.Name}' is overdue by {overdueDays} days. Overdue fine: £{overdueAmount}");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("No overdue items");
+            }
+        }
+
     }
 }

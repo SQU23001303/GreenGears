@@ -49,7 +49,13 @@ namespace Green_Gears
                         interactWithItems.DisplayUnavailableTools(toolManager);
                         break;
                     case 5:
+                        Console.WriteLine("You have picked option 5");
+                        interactWithItems.OverdueItems(toolManager);
+                        Console.ReadKey();
+                        return;
+                    case 6:
                         Console.WriteLine("Exiting program...");
+                        Console.ReadKey();
                         return;
                     default:
                         Console.WriteLine("Invalid option. Please select a valid option.");
@@ -66,7 +72,8 @@ namespace Green_Gears
             Console.WriteLine("2 - Return a tool");
             Console.WriteLine("3 - Update customer record");
             Console.WriteLine("4 - Current loan records");
-            Console.WriteLine("5 - Exit");
+            Console.WriteLine("5 - Overdue Items");
+            Console.WriteLine("6 - Exit");
             Console.ForegroundColor = ConsoleColor.White;
         }
 
