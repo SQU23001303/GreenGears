@@ -17,6 +17,10 @@ namespace Green_Gears
                 DateTime returnDate = DateTime.Now.AddDays(7); // Assuming a loan period of 7 days
                 toolToLoan.LoanTimestamp = DateTime.Now; // Record the loan timestamp
                 toolManager.UpdateToolAvailability(toolId, false);
+
+                toolToLoan.CurrentCustomer = customer.customerId;
+                Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out to customer ID: {customer.customerId}.");
+
                 Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out, with the following return date: {returnDate}");
                 return returnDate;
             }
@@ -45,7 +49,10 @@ namespace Green_Gears
             if (toolToReturn != null && !toolToReturn.Available)
             {
                 toolManager.UpdateToolAvailability(toolId, true);
-                Console.WriteLine($"Tool '{toolToReturn.Name}' has been returned.");
+                double overdueAmount = OverdueItems(toolManager); // Get the overdue amount
+                double totalPrice = overdueAmount + toolToReturn.Price;
+                Console.WriteLine($"Tool '{toolToReturn.Name}' has been returned, the total price is {totalPrice}");
+                toolToReturn.CurrentCustomer = null;
             }
             else if (toolToReturn != null && toolToReturn.Available)
             {
@@ -88,7 +95,7 @@ namespace Green_Gears
             }
         }
 
-        public void OverdueItems(ToolManager toolManager)
+        public double OverdueItems(ToolManager toolManager)
         {
             int count = 0;
 
@@ -120,7 +127,8 @@ namespace Green_Gears
             {
                 Console.WriteLine("No overdue items");
             }
-        }
 
+            return 0;
+        }
     }
 }
