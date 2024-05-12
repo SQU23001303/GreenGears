@@ -9,7 +9,7 @@ namespace Green_Gears
 {
     class Customer
     {
-        internal static Customer customerId;
+        public static Customer customerId;
         public int Id { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }

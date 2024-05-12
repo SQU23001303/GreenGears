@@ -12,7 +12,7 @@ namespace Green_Gears
 {
     internal class Program
     {
-        static List<Customer> customers = new List<Customer>();
+        public static List<Customer> customers = new List<Customer>();
 
         static void Main(string[] args)
         {
@@ -40,11 +40,11 @@ namespace Green_Gears
                         Console.WriteLine("You have picked option 1");
                         toolManager.DisplayAvailableTools();
                         int toolId = GetToolIdFromUser();
-                        interactWithItems.LoanTool(toolManager, toolId);
+                        interactWithItems.LoanTool(toolManager, customers, toolId);
                         break;
                     case 2:
                         Console.WriteLine("You have picked option 2");
-                        interactWithItems.ReturnTool(toolManager);
+                        interactWithItems.ReturnTool(toolManager, customers);
                         break;
                     case 3:
                         Console.WriteLine("You have picked option 3");
@@ -53,6 +53,7 @@ namespace Green_Gears
                     case 4:
                         Console.WriteLine("You have picked option 4");
                         interactWithItems.DisplayUnavailableTools(toolManager);
+                        Console.ReadKey();
                         break;
                     case 5:
                         Console.WriteLine("You have picked option 5");
@@ -62,6 +63,7 @@ namespace Green_Gears
                     case 6:
                         Console.WriteLine("You have picked option 6");
                         DisplayCustomers();
+                        Console.ReadKey();
                         return;
                     case 7:
                         Console.WriteLine("Exiting program...");
@@ -74,7 +76,7 @@ namespace Green_Gears
             }
         }
 
-        static void DisplayOptions()
+        public static void DisplayOptions()
         {
             Console.WriteLine("\nPlease select what you would like to do on our system today?");
             Console.ForegroundColor = ConsoleColor.DarkBlue;
@@ -101,7 +103,7 @@ namespace Green_Gears
             return toolId;
         }
 
-        static Customer SignUp(List<Customer> customers)
+        public static Customer SignUp(List<Customer> customers)
         {
             Console.WriteLine("Please enter your name:");
             string name = Console.ReadLine();
@@ -115,7 +117,7 @@ namespace Green_Gears
 
             return newCustomer;
         }
-        static void DisplayCustomers()
+        public static void DisplayCustomers()
         {
             Console.WriteLine("List of Customers:");
             foreach (var customer in customers)
