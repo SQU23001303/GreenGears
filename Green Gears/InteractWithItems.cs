@@ -18,8 +18,8 @@ namespace Green_Gears
                 toolToLoan.LoanTimestamp = DateTime.Now; // Record the loan timestamp
                 toolManager.UpdateToolAvailability(toolId, false);
 
-                toolToLoan.CurrentCustomer = customer.customerId;
-                Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out to customer ID: {customer.customerId}.");
+                toolToLoan.CurrentCustomer = Customer.customerId;
+                Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out to customer ID: {Customer.customerId}.");
 
                 Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out, with the following return date: {returnDate}");
                 return returnDate;
