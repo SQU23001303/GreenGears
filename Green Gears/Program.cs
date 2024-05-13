@@ -107,7 +107,7 @@ namespace Green_Gears
         {
             Console.WriteLine("Please enter your name:");
             string name = Console.ReadLine();
-            Console.WriteLine("Please enter your contact information:");
+            Console.WriteLine("Please enter your email:");
             string details = Console.ReadLine();
 
             int id = customers.Count + 1; // Generate a unique ID for the new customer
@@ -122,7 +122,7 @@ namespace Green_Gears
             Console.WriteLine("List of Customers:");
             foreach (var customer in customers)
             {
-                Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}, Contact: {customer.Details}");
+                Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}, Email: {customer.Details}");
             }
         }
     }

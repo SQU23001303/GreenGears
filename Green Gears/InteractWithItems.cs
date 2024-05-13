@@ -26,7 +26,9 @@ namespace Green_Gears
                 int customerTools;
                 if (!int.TryParse(customerToolsInput, out customerTools))
                 {
-                    Console.WriteLine("Invalid customer ID. Please enter a valid integer.");
+                    Console.WriteLine("Invalid customer ID. Please try again");
+                    toolManager.UpdateToolAvailability(toolId, true);
+                    Console.WriteLine("The selected tool has been returned due to user input error.");
                     Program.DisplayOptions();
                 }
 
@@ -210,7 +212,7 @@ namespace Green_Gears
             }
             else
             {
-                Console.WriteLine("Item within return date so no fee added on");
+                Console.WriteLine("Item is within return date so no fee added on");
             }
 
             return 0;
