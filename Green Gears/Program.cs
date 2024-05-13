@@ -21,6 +21,9 @@ namespace Green_Gears
 
             Console.WriteLine("Welcome to Green Gears");
             Console.WriteLine("The place where we loan you gardening equipment");
+            customers.Add(new Customer(1, "Steve Evans", "SteveEvans@hotmail.com"));
+            customers.Add(new Customer(2, "Ben Smith", "BenSmith@outlook.com"));
+            customers.Add(new Customer(3, "David Jones", "DJones@gmail.com"));
 
             while (true)
             {
@@ -54,16 +57,19 @@ namespace Green_Gears
                         Console.WriteLine("You have picked option 4");
                         interactWithItems.DisplayUnavailableTools(toolManager);
                         Console.ReadKey();
+                        DisplayOptions();
                         break;
                     case 5:
                         Console.WriteLine("You have picked option 5");
                         interactWithItems.OverdueItems(toolManager);
                         Console.ReadKey();
+                        DisplayOptions();
                         return;
                     case 6:
                         Console.WriteLine("You have picked option 6");
                         DisplayCustomers();
                         Console.ReadKey();
+                        DisplayOptions();
                         return;
                     case 7:
                         Console.WriteLine("You have picked option 7");
@@ -131,7 +137,7 @@ namespace Green_Gears
             Console.WriteLine("Please enter your email:");
             string details = Console.ReadLine();
 
-            int id = customers.Count + 1; // Generate a unique ID for the new customer
+            int id = customers.Count + 1;
 
             Customer newCustomer = new Customer(id, name, details);
             customers.Add(newCustomer);
@@ -182,10 +188,12 @@ namespace Green_Gears
                 // Update other details as needed
 
                 Console.WriteLine("Customer details updated successfully.");
+                DisplayOptions();
             }
             else
             {
                 Console.WriteLine("No changes made to customer details.");
+                DisplayOptions();
             }
         }
     }

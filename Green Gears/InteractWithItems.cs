@@ -21,56 +21,43 @@ namespace Green_Gears
                 toolToLoan.LoanTimestamp = DateTime.Now;
                 toolManager.UpdateToolAvailability(toolId, false);
 
-                Console.WriteLine("What customer Id is being used to loan out the tools?");
-                string customerToolsInput = Console.ReadLine();
-                int customerTools;
-                if (!int.TryParse(customerToolsInput, out customerTools))
+                Console.WriteLine("Enter the customer ID who is borrowing the tool:");
+                if (int.TryParse(Console.ReadLine(), out int customerId))
                 {
-                    Console.WriteLine("Invalid customer ID. Please try again");
-                    toolManager.UpdateToolAvailability(toolId, true);
-                    Console.WriteLine("The selected tool has been returned due to user input error.");
-                    Program.DisplayOptions();
-                }
-
-
-
-                Program program = new Program();
-                bool customerFound = false;
-                foreach (var customer in customers)
-                {
-                    toolToLoan.CurrentCustomer = customer;
-                    if (customer.Id == customerTools)
+                    Customer customer = customers.FirstOrDefault(c => c.Id == customerId);
+                    if (customer != null)
                     {
-                        customerFound = true;
-                        Console.WriteLine($"Customer ID {customerTools} matches customer: {customer.Name}");
-                        //toolToLoan.CurrentCustomer = customer.Name;
+                        Console.WriteLine($"Customer ID {customerId} matches customer: {customer.Name}");
                         Console.WriteLine($"Is {customer.Name} your name? (yes/no)");
                         string choice = Console.ReadLine().ToLower();
 
-                        name = customer.Name;
-
                         if (choice == "yes")
                         {
-                            Console.WriteLine("Your details are correct, advancing to Loaning Tools.");
-                            break;
+                            Console.WriteLine("Your details are correct, advancing to loaning the tool.");
+                            toolToLoan.CurrentCustomer = customer;
                         }
                         else
                         {
+                            toolManager.UpdateToolAvailability(toolId, true);
                             Console.WriteLine("Please try again as the details are incorrect");
-                            Program.DisplayOptions();
+                            return DateTime.Now;
                         }
                     }
+                    else
+                    {
+                        toolManager.UpdateToolAvailability(toolId, true);
+                        Console.WriteLine("Customer ID is invalid, please try again");
+                        return DateTime.Now;
+                    }
                 }
-
-                if (!customerFound)
+                else
                 {
-                    Console.WriteLine("Customer ID is invalid, please try again");
-                    Program.DisplayOptions();
+                    toolManager.UpdateToolAvailability(toolId, true);
+                    Console.WriteLine("Invalid input. Please enter a valid customer ID.");
+                    return DateTime.Now;
                 }
 
-                toolToLoan.CurrentCustomer = Customer.customerId;
-                Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out to {name}.");
-
+                Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out to customer ID: {toolToLoan.CurrentCustomer.Id}.");
                 Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out, with the following return date: {returnDate}");
                 return returnDate;
             }
@@ -82,6 +69,7 @@ namespace Green_Gears
             {
                 Console.WriteLine("Invalid tool ID.");
             }
+
             return DateTime.Now;
         }
 
@@ -164,10 +152,7 @@ namespace Green_Gears
                 {
                     if (!tool.Available && DateTime.Now > tool.LoanTimestamp.AddDays(7))
                     {
-                        // Calculate the number of days overdue
                         int overdueDays = (int)(DateTime.Now - tool.LoanTimestamp.AddDays(7)).TotalDays;
-
-                        // Calculate the overdue amount
                         double overdueAmount = overdueDays * 10.0;
 
                         Console.WriteLine($"Tool '{tool.Name}' is overdue by {overdueDays} days. Overdue fine: £{overdueAmount}");
@@ -200,10 +185,7 @@ namespace Green_Gears
                 {
                     if (!tool.Available && DateTime.Now > tool.LoanTimestamp.AddDays(7))
                     {
-                        // Calculate the number of days overdue
                         int overdueDays = (int)(DateTime.Now - tool.LoanTimestamp.AddDays(7)).TotalDays;
-
-                        // Calculate the overdue amount
                         double overdueAmount = overdueDays * 10.0;
 
                         Console.WriteLine($"Tool '{tool.Name}' is overdue by {overdueDays} days. Overdue fine: £{overdueAmount}");
