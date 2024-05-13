@@ -12,11 +12,14 @@ namespace Green_Gears
     {
         string name = "";
 
+        //Loan tools to customer
         public DateTime LoanTool(ToolManager toolManager, List<Customer> customers, int toolId)
         {
+            //Gets tool by ID
             Tools toolToLoan = toolManager.GetToolById(toolId);
             if (toolToLoan != null && toolToLoan.Available)
             {
+                //Adds time stamp
                 DateTime returnDate = DateTime.Now.AddDays(7);
                 toolToLoan.LoanTimestamp = DateTime.Now;
                 toolManager.UpdateToolAvailability(toolId, false);
@@ -27,6 +30,7 @@ namespace Green_Gears
                     Customer customer = customers.FirstOrDefault(c => c.Id == customerId);
                     if (customer != null)
                     {
+                        //Links customer with tool
                         Console.WriteLine($"Customer ID {customerId} matches customer: {customer.Name}");
                         Console.WriteLine($"Is {customer.Name} your name? (yes/no)");
                         string choice = Console.ReadLine().ToLower();
@@ -73,6 +77,7 @@ namespace Green_Gears
             return DateTime.Now;
         }
 
+        //Return tools from customer
         public void ReturnTool(ToolManager toolManager, List<Customer> customers)
         {
             DisplayUnavailableTools(toolManager);
@@ -103,6 +108,7 @@ namespace Green_Gears
             }
         }
 
+        //Dsiplays the unavailable tools list
         public void DisplayUnavailableTools(ToolManager toolManager)
         {
             int count = 0;
@@ -134,6 +140,7 @@ namespace Green_Gears
             }
         }
 
+        //Displays the overdue items list
         public double OverdueItems(ToolManager toolManager)
         {
             int count = 0;
@@ -167,6 +174,7 @@ namespace Green_Gears
             return 0;
         }
 
+        //Items returned
         public double ItemReturned(ToolManager toolManager)
         {
             int count = 0;

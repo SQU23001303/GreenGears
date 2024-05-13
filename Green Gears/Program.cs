@@ -16,6 +16,7 @@ namespace Green_Gears
 
         static void Main(string[] args)
         {
+            //Start to the program
             ToolManager toolManager = new ToolManager();
             InteractWithItems interactWithItems = new InteractWithItems();
 
@@ -37,6 +38,7 @@ namespace Green_Gears
                     continue;
                 }
 
+                //The menu switch to take user around the application
                 switch (userInput)
                 {
                     case 1:
@@ -102,6 +104,7 @@ namespace Green_Gears
             }
         }
 
+        //Displays main menu
         public static void DisplayOptions()
         {
             Console.WriteLine("\nPlease select what you would like to do on our system today?");
@@ -117,6 +120,7 @@ namespace Green_Gears
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        //Tracks the user and tool ID
         static int GetToolIdFromUser()
         {
             Console.WriteLine("Enter the tool ID you want to borrow:");
@@ -130,6 +134,7 @@ namespace Green_Gears
             return toolId;
         }
 
+        //Customer sign up to add new customers
         public static Customer SignUp(List<Customer> customers)
         {
             Console.WriteLine("Please enter your name:");
@@ -144,6 +149,8 @@ namespace Green_Gears
 
             return newCustomer;
         }
+
+        //Displays customers
         public static void DisplayCustomers()
         {
             Console.WriteLine("List of Customers:");
@@ -153,39 +160,36 @@ namespace Green_Gears
             }
         }
 
-
+        //Looks up customer ID
         public static Customer LookupCustomerById(List<Customer> customers, int customerId)
         {
             foreach (var customer in customers)
             {
                 if (customer.Id == customerId)
                 {
-                    return customer; // Found the customer, return it
+                    return customer;
                 }
             }
-            return null; // Customer with specified ID not found
+            return null;
         }
 
-        // Method to update customer details
+        //Method to update customer details
         public static void UpdateCustomerDetails(Customer customer)
         {
             Console.WriteLine($"Current details for customer ID {customer.Id}:");
             Console.WriteLine($"Name: {customer.Name}");
             Console.WriteLine($"Contact Details: {customer.Details}");
-            // Output other details as needed
 
-            // Prompt user to update details
             Console.WriteLine("Do you want to update customer details? (yes/no)");
             string choice = Console.ReadLine().ToLower();
 
             if (choice == "yes")
             {
-                // Update customer details
+                //Updates user details
                 Console.WriteLine("Enter new name:");
                 customer.Name = Console.ReadLine();
                 Console.WriteLine("Enter new contact details:");
                 customer.Details = Console.ReadLine();
-                // Update other details as needed
 
                 Console.WriteLine("Customer details updated successfully.");
                 DisplayOptions();
