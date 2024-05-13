@@ -66,6 +66,26 @@ namespace Green_Gears
                         Console.ReadKey();
                         return;
                     case 7:
+                        Console.WriteLine("You have picked option 7");
+                        Console.WriteLine("Enter the ID of the customer whose details you want to update:");
+                        if (int.TryParse(Console.ReadLine(), out int customerId))
+                        {
+                            Customer customerToUpdate = LookupCustomerById(customers, customerId);
+                            if (customerToUpdate != null)
+                            {
+                                UpdateCustomerDetails(customerToUpdate);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Customer not found.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input. Please enter a valid customer ID.");
+                        }
+                        break;
+                    case 8:
                         Console.WriteLine("Exiting program...");
                         Console.ReadKey();
                         return;
@@ -86,7 +106,8 @@ namespace Green_Gears
             Console.WriteLine("4 - Current loan records");
             Console.WriteLine("5 - Overdue Items");
             Console.WriteLine("6 - Show customers list");
-            Console.WriteLine("7 - Exit");
+            Console.WriteLine("7 - Update Customer details");
+            Console.WriteLine("8 - Exit");
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -123,6 +144,48 @@ namespace Green_Gears
             foreach (var customer in customers)
             {
                 Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}, Email: {customer.Details}");
+            }
+        }
+
+
+        public static Customer LookupCustomerById(List<Customer> customers, int customerId)
+        {
+            foreach (var customer in customers)
+            {
+                if (customer.Id == customerId)
+                {
+                    return customer; // Found the customer, return it
+                }
+            }
+            return null; // Customer with specified ID not found
+        }
+
+        // Method to update customer details
+        public static void UpdateCustomerDetails(Customer customer)
+        {
+            Console.WriteLine($"Current details for customer ID {customer.Id}:");
+            Console.WriteLine($"Name: {customer.Name}");
+            Console.WriteLine($"Contact Details: {customer.Details}");
+            // Output other details as needed
+
+            // Prompt user to update details
+            Console.WriteLine("Do you want to update customer details? (yes/no)");
+            string choice = Console.ReadLine().ToLower();
+
+            if (choice == "yes")
+            {
+                // Update customer details
+                Console.WriteLine("Enter new name:");
+                customer.Name = Console.ReadLine();
+                Console.WriteLine("Enter new contact details:");
+                customer.Details = Console.ReadLine();
+                // Update other details as needed
+
+                Console.WriteLine("Customer details updated successfully.");
+            }
+            else
+            {
+                Console.WriteLine("No changes made to customer details.");
             }
         }
     }
