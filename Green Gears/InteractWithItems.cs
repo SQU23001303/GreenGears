@@ -20,11 +20,11 @@ namespace Green_Gears
             if (toolToLoan != null && toolToLoan.Available)
             {
                 //Adds time stamp
-                DateTime returnDate = DateTime.Now.AddDays(7);
-                toolToLoan.LoanTimestamp = DateTime.Now;
+                DateTime returnDate = DateTime.Now.AddDays(7); //return date
+                toolToLoan.LoanTimestamp = DateTime.Now; //timestamp
                 toolManager.UpdateToolAvailability(toolId, false);
 
-                Console.WriteLine("Enter the customer ID who is borrowing the tool:");
+                Console.WriteLine("Enter the customer ID who is borrowing the tool:"); //sets up user input
                 if (int.TryParse(Console.ReadLine(), out int customerId))
                 {
                     Customer customer = customers.FirstOrDefault(c => c.Id == customerId);
@@ -33,15 +33,17 @@ namespace Green_Gears
                         //Links customer with tool
                         Console.WriteLine($"Customer ID {customerId} matches customer: {customer.Name}");
                         Console.WriteLine($"Is {customer.Name} your name? (yes/no)");
-                        string choice = Console.ReadLine().ToLower();
+                        string choice = Console.ReadLine().ToLower(); //converts user response to lowercase
 
                         if (choice == "yes")
                         {
+                            //message to user 
                             Console.WriteLine("Your details are correct, advancing to loaning the tool.");
                             toolToLoan.CurrentCustomer = customer;
                         }
                         else
                         {
+                            //error message
                             toolManager.UpdateToolAvailability(toolId, true);
                             Console.WriteLine("Please try again as the details are incorrect");
                             return DateTime.Now;
@@ -49,6 +51,7 @@ namespace Green_Gears
                     }
                     else
                     {
+                        //error message
                         toolManager.UpdateToolAvailability(toolId, true);
                         Console.WriteLine("Customer ID is invalid, please try again");
                         return DateTime.Now;
@@ -56,21 +59,25 @@ namespace Green_Gears
                 }
                 else
                 {
+                    //error message
                     toolManager.UpdateToolAvailability(toolId, true);
                     Console.WriteLine("Invalid input. Please enter a valid customer ID.");
                     return DateTime.Now;
                 }
 
+                //message to let user know success
                 Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out to customer ID: {toolToLoan.CurrentCustomer.Id}.");
                 Console.WriteLine($"Tool '{toolToLoan.Name}' has been loaned out, with the following return date: {returnDate}");
                 return returnDate;
             }
             else if (toolToLoan != null && !toolToLoan.Available)
             {
+                //error message
                 Console.WriteLine($"Tool '{toolToLoan.Name}' is not available for loan.");
             }
             else
             {
+                //error mesage
                 Console.WriteLine("Invalid tool ID.");
             }
 
@@ -85,25 +92,31 @@ namespace Green_Gears
             string input = Console.ReadLine();
             if (!int.TryParse(input, out int toolId))
             {
+                //error message
                 Console.WriteLine("Invalid input. Please enter a valid tool ID.");
                 return;
             }
             Tools toolToReturn = toolManager.GetToolById(toolId);
             if (toolToReturn != null && !toolToReturn.Available)
             {
+                //updates tool availability
                 toolManager.UpdateToolAvailability(toolId, true);
                 double overdueAmount = ItemReturned(toolManager);
+                //returns total price for user
                 double totalPrice = overdueAmount + toolToReturn.Price;
 
+                //Confirmation message
                 Console.WriteLine($"Tool '{toolToReturn.Name}' has been returned by {name}, the total price is {totalPrice}");
                 toolToReturn.CurrentCustomer = null;
             }
             else if (toolToReturn != null && toolToReturn.Available)
             {
+                //error message
                 Console.WriteLine($"Tool '{toolToReturn.Name}' is already available.");
             }
             else
             {
+                //error message
                 Console.WriteLine($"Tool with ID '{toolId}' not found.");
             }
         }
@@ -111,7 +124,7 @@ namespace Green_Gears
         //Dsiplays the unavailable tools list
         public void DisplayUnavailableTools(ToolManager toolManager)
         {
-            int count = 0;
+            int count = 0; // counter
 
             foreach (var tool in toolManager.tools)
             {
@@ -123,6 +136,7 @@ namespace Green_Gears
 
             if (count > 0)
             {
+                //tools to return
                 Console.WriteLine("Tools to return:");
                 foreach (var tool in toolManager.tools)
                 {
@@ -136,6 +150,7 @@ namespace Green_Gears
             }
             else
             {
+                //error message
                 Console.WriteLine("All tools are available.");
             }
         }
@@ -143,13 +158,13 @@ namespace Green_Gears
         //Displays the overdue items list
         public double OverdueItems(ToolManager toolManager)
         {
-            int count = 0;
+            int count = 0; //counter
 
             foreach (var tool in toolManager.tools)
             {
                 if (!tool.Available && DateTime.Now > tool.LoanTimestamp.AddDays(7))
                 {
-                    count++;
+                    count++; //increment counter
                 }
             }
 
@@ -160,7 +175,7 @@ namespace Green_Gears
                     if (!tool.Available && DateTime.Now > tool.LoanTimestamp.AddDays(7))
                     {
                         int overdueDays = (int)(DateTime.Now - tool.LoanTimestamp.AddDays(7)).TotalDays;
-                        double overdueAmount = overdueDays * 10.0;
+                        double overdueAmount = overdueDays * 10.0; //overdue amount
 
                         Console.WriteLine($"Tool '{tool.Name}' is overdue by {overdueDays} days. Overdue fine: £{overdueAmount}");
                     }
@@ -177,13 +192,13 @@ namespace Green_Gears
         //Items returned
         public double ItemReturned(ToolManager toolManager)
         {
-            int count = 0;
+            int count = 0; //counter
 
             foreach (var tool in toolManager.tools)
             {
                 if (!tool.Available && DateTime.Now > tool.LoanTimestamp.AddDays(7))
                 {
-                    count++;
+                    count++; //increment counter
                 }
             }
 
@@ -194,7 +209,7 @@ namespace Green_Gears
                     if (!tool.Available && DateTime.Now > tool.LoanTimestamp.AddDays(7))
                     {
                         int overdueDays = (int)(DateTime.Now - tool.LoanTimestamp.AddDays(7)).TotalDays;
-                        double overdueAmount = overdueDays * 10.0;
+                        double overdueAmount = overdueDays * 10.0; //overdue amount
 
                         Console.WriteLine($"Tool '{tool.Name}' is overdue by {overdueDays} days. Overdue fine: £{overdueAmount}");
                     }

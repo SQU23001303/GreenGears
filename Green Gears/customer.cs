@@ -14,6 +14,8 @@ namespace Green_Gears
         public int Id { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }
+
+        //Counter for customer
         public static int Count { get; internal set; }
 
         public Customer(int id, string name, string details)

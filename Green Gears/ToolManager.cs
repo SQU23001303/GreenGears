@@ -16,6 +16,7 @@ namespace Green_Gears
         {
             tools = new List<Tools>
             {
+                //add tools and all the attributes
                 new Tools(1, "Ladder", true, 15.00),
                 new Tools(2, "Lawnmower", true, 20.00),
                 new Tools(3, "Strimmer", true, 25.00),
@@ -30,7 +31,7 @@ namespace Green_Gears
             Console.WriteLine("\nAvailable Tools for hire:");
             foreach (var tool in tools)
             {
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.ForegroundColor = ConsoleColor.DarkBlue; //changes foreground colour
                 Console.WriteLine($"{tool.Id}: {tool.Name} - {(tool.Available ? "Available" : "Not Available")}");
             }
             Console.ForegroundColor = ConsoleColor.White;
@@ -48,11 +49,12 @@ namespace Green_Gears
             Tools toolToUpdate = tools.Find(t => t.Id == toolId);
             if (toolToUpdate != null)
             {
-                toolToUpdate.Available = available;
+                toolToUpdate.Available = available; //To check tool availability before giving out tool
                 Console.WriteLine($"Tool {toolId} availability updated to {(available ? "Available" : "Not Available")}");
             }
             else
             {
+                //error message
                 Console.WriteLine($"Tool {toolId} not found.");
             }
         }

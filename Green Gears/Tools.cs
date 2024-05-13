@@ -14,6 +14,8 @@ namespace Green_Gears
         public bool Available { get; set; }
         public double Price { get; set; }
         public Customer CurrentCustomer { get; set; }
+        
+        //Timestamp 
         public DateTime LoanTimestamp { get; set; }
 
         public Tools(int id, string name, bool available, double price)

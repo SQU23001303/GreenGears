@@ -20,8 +20,11 @@ namespace Green_Gears
             ToolManager toolManager = new ToolManager();
             InteractWithItems interactWithItems = new InteractWithItems();
 
+            //Start up text
             Console.WriteLine("Welcome to Green Gears");
             Console.WriteLine("The place where we loan you gardening equipment");
+
+            //Adds three customers to show customers
             customers.Add(new Customer(1, "Steve Evans", "SteveEvans@hotmail.com"));
             customers.Add(new Customer(2, "Ben Smith", "BenSmith@outlook.com"));
             customers.Add(new Customer(3, "David Jones", "DJones@gmail.com"));
@@ -137,13 +140,15 @@ namespace Green_Gears
         //Customer sign up to add new customers
         public static Customer SignUp(List<Customer> customers)
         {
+            //Customer inputs
             Console.WriteLine("Please enter your name:");
             string name = Console.ReadLine();
             Console.WriteLine("Please enter your email:");
             string details = Console.ReadLine();
 
-            int id = customers.Count + 1;
+            int id = customers.Count + 1; //auto incrementing counter for ID
 
+            //Adds new customer based on user
             Customer newCustomer = new Customer(id, name, details);
             customers.Add(newCustomer);
 
@@ -154,7 +159,7 @@ namespace Green_Gears
         public static void DisplayCustomers()
         {
             Console.WriteLine("List of Customers:");
-            foreach (var customer in customers)
+            foreach (var customer in customers) //scans through every customer
             {
                 Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}, Email: {customer.Details}");
             }
@@ -163,8 +168,9 @@ namespace Green_Gears
         //Looks up customer ID
         public static Customer LookupCustomerById(List<Customer> customers, int customerId)
         {
-            foreach (var customer in customers)
+            foreach (var customer in customers) //scans through every customer
             {
+                //Checking customer information to lookup
                 if (customer.Id == customerId)
                 {
                     return customer;
@@ -176,10 +182,12 @@ namespace Green_Gears
         //Method to update customer details
         public static void UpdateCustomerDetails(Customer customer)
         {
+            //Runs through customer details
             Console.WriteLine($"Current details for customer ID {customer.Id}:");
             Console.WriteLine($"Name: {customer.Name}");
             Console.WriteLine($"Contact Details: {customer.Details}");
 
+            //User input
             Console.WriteLine("Do you want to update customer details? (yes/no)");
             string choice = Console.ReadLine().ToLower();
 
@@ -191,11 +199,13 @@ namespace Green_Gears
                 Console.WriteLine("Enter new contact details:");
                 customer.Details = Console.ReadLine();
 
+                //Success message
                 Console.WriteLine("Customer details updated successfully.");
                 DisplayOptions();
             }
             else
             {
+                //Error messgae
                 Console.WriteLine("No changes made to customer details.");
                 DisplayOptions();
             }
